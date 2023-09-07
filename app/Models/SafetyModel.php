@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class SafetyModel extends Model
+{
+    use HasFactory;
+    protected $table = 'safety_table';
+    protected $guarded = array();
+}
