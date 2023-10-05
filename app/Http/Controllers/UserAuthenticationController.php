@@ -21,7 +21,7 @@ class UserAuthenticationController extends Controller
         $length = count ($data);
         if ($length == 0) 
         {
-            return redirect('admin/login')
+            return redirect('/admin/login')
             ->with('error','Sorry No User Records Found');
             }
 

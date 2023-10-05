@@ -65,7 +65,20 @@ Project Set Up
         safety
             php artisan make:migration create_safety_table --create=safety_table
             php artisan make:model SafetyModel -m 
-            php artisan make:controller SafetyController --resource 
+            php artisan make:controller SafetyController --resource
+
+        dives
+            php artisan make:migration create_dives_table --create=dives_table
+            php artisan make:model DivesModel -m 
+            php artisan make:controller DivesController --resource 
+
+        equipments
+            php artisan make:migration create_equipments_table --create=equipments_table
+            php artisan make:model EquipmentsModel -m 
+            php artisan make:controller EquipmentsController --resource 
+
+
+ 
 
 
 
@@ -109,3 +122,4 @@ Git Hub
 2 => git commit -m 'Initial RDRMS Uploads'
 3 => git branch -M main
 4 => git push -u origin main
+zip -r project.zip project -x "*.git*"

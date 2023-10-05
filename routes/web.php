@@ -5,12 +5,16 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\DivesController;
+use App\Http\Controllers\EquipmentsController;
 use App\Http\Controllers\InstructorsController;
 use App\Http\Controllers\SafetyController;
 use App\Http\Controllers\StudentsController;
 
 use App\Models\AdminModel;
 use App\Models\CoursesModel;
+use App\Models\EquipmentsModel;
+use App\Models\DivesModel;
 use App\Models\StudentsModel;
 use App\Models\InstructorsModel;
 use App\Models\SafetyModel;
@@ -136,8 +140,8 @@ Route::get('/components/students', function ()
     if (session()->has('user')) {
         $data = StudentsModel::latest()->get ();
         $total = StudentsModel::count();
-
-        return view('components/students', compact('data','total'));
+        $courses = CoursesModel::get(['Name']);
+        return view('components/students', compact('data','total','courses'));
     }
     return view('welcome');
 });
@@ -160,14 +164,51 @@ Route::get('/components/safety', function ()
     return view('welcome');
 });
 
+Route::get('/components/dives', function () 
+{
+    if (session()->has('user')) {
+        $data = DivesModel::latest()->get ();
+        $total = DivesModel::count();
+        $instructors = InstructorsModel::get(['id']);
+        $equipments = EquipmentsModel::get(['id']);
+        return view('components/dives', compact('data','total','instructors','equipments'));
+    }
+    return view('welcome');
+});
 
+Route::get('/components/dives/students/', function () 
+{
+    if (session()->has('user')) {
+        $data = DivesModel::where ('Student','1')->get ();
+        $total = DivesModel::count();
+        $instructors = InstructorsModel::get(['id']);
+        $equipments = EquipmentsModel::get(['id']);
+        return view('components/dives', compact('data','total','instructors','equipments'));
+    }
+    return view('welcome');
+});
+
+Route::get('/components/equipments', function () 
+{
+    if (session()->has('user')) {
+        $data = EquipmentsModel::latest()->get ();
+        $total = EquipmentsModel::count();
+        return view('components/equipments', compact('data','total'));
+    }
+    return view('welcome');
+});
+
+Route::get('get/course/amount/{name}',[StudentsController::class,'getCourseAmount']);
 
 
 // resources
 Route::resource('AdminResource',AdminController::class);
-Route::resource('StudentsResource',StudentsController::class);
-Route::resource('InstructorsResource',InstructorsController::class);
-Route::resource('CoursesResource',CoursesController::class);
+Route::resource('DivesResource', DivesController::class);
 Route::resource('SafetyResource',SafetyController::class);
+Route::resource('CoursesResource',CoursesController::class);
+Route::resource('StudentsResource',StudentsController::class);
+Route::resource('EquipmentsResource',EquipmentsController::class);
+Route::resource('InstructorsResource',InstructorsController::class);
+
 
 

@@ -12,8 +12,21 @@
         <a class="nav-link dropdown-toggle" href="{{url('components/courses')}}"role="button" >Courses</a>
     </li>
 
+    @if(session('userType')=='Instructor' || session('userType')=='Admin')
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="{{url('components/students')}}" role="button" >Students</a>
+    </li>
+    @endif
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{url('components/dives')}}" role="button" >Dives</a>
+    </li>
+
+
+
+    
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{url('components/equipments')}}" role="button" >Equipments</a>
     </li>
 
     <li class="nav-item dropdown">
@@ -23,11 +36,11 @@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="{{url('components/safety')}}" role="button" >Safety Info</a>
     </li>
-
+    @if(session('userType')=='Admin')
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="{{url('components/admin')}}" role="button">Admin</a>
     </li>
-
+    @endif
     </ul>
 
 

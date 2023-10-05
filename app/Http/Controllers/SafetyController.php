@@ -35,13 +35,21 @@ class SafetyController extends Controller
     {
         $request -> validate ([
             'Name' => 'required',
-            'Description' => 'required',
+            'Safety' => 'required',
         ]);
 
         // insert Data
         $form_data = array(
             'Name' => $request->Name,
-            'Description' => $request->Description,
+            'Description' => $request->Safety,
+            'Safety1' => $request->Safety1,
+            'Safety2' => $request->Safety2,
+            'Safety3' => $request->Safety3,
+            'Safety4' => $request->Safety4,
+            'Safety5' => $request->Safety5,
+            'Safety6' => $request->Safety6,
+            'Safety7' => $request->Safety7,
+            'Safety8' => $request->Safety8,
         );
         SafetyModel::create ($form_data);
         return redirect('SafetyResource')
@@ -87,13 +95,21 @@ class SafetyController extends Controller
 
         $request -> validate ([
             'Name' => 'required',
-            'Description' => 'required',
+            'Safety' => 'required',
         ]);
 
         // Update Data
         $form_data = array(
             'Name' => $request->Name,
-            'Description' => $request->Description,
+            'Description' => $request->Safety,
+            'Safety1' => $request->Safety1,
+            'Safety2' => $request->Safety2,
+            'Safety3' => $request->Safety3,
+            'Safety4' => $request->Safety4,
+            'Safety5' => $request->Safety5,
+            'Safety6' => $request->Safety6,
+            'Safety7' => $request->Safety7,
+            'Safety8' => $request->Safety8,
         );
         // update
         SafetyModel::whereId ($rowId)->update($form_data);

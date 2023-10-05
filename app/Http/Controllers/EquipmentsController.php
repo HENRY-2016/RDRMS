@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EquipmentsModel;
 use Illuminate\Http\Request;
-use App\Models\CoursesModel;
 
-class CoursesController extends Controller
+class EquipmentsController extends Controller
 {
     public function index()
     {
-        $data = CoursesModel::latest()->get ();
-        $total = CoursesModel::count();
-        return view('components/courses', compact('data','total'));
+        $data =EquipmentsModel::latest()->get ();
+        $total = EquipmentsModel::count();
+
+        return view('components/equipments', compact('data','total'));
     }
 
     /**
@@ -34,29 +35,16 @@ class CoursesController extends Controller
     {
         $request -> validate ([
             'Name' => 'required',
-            'Cost' => 'required',
-            'Period' => 'required',
-            'Requirement'  => 'required',
+            'Description' => 'required',
         ]);
 
         // insert Data
         $form_data = array(
             'Name' => $request->Name,
-            'Cost' => $request->Cost,
-            'Description'  => $request->Requirement,
-            'Requirement1'  => $request->Requirement1,
-            'Requirement2'  => $request->Requirement2,
-            'Requirement3'  => $request->Requirement3,
-            'Requirement4'  => $request->Requirement4,
-            'Requirement5'  => $request->Requirement5,
-            'Requirement6'  => $request->Requirement6,
-            'Requirement7'  => $request->Requirement7,
-            'Requirement8'  => $request->Requirement8,
-            'Period'  => $request->Period,
-
+            'Description' => $request->Description,
         );
-        CoursesModel::create ($form_data);
-        return redirect('CoursesResource')
+        EquipmentsModel::create ($form_data);
+        return redirect('EquipmentsResource')
             ->with('success','Data Added successfully.');
     }
 
@@ -68,7 +56,7 @@ class CoursesController extends Controller
     */
     public function show($id)
     {
-        $data = CoursesModel::findOrFail($id);
+        $data =EquipmentsModel::findOrFail($id);
         // echo json_encode($data);
         return view('components/doctor/show', compact('data'));
         // echo $data;
@@ -82,7 +70,7 @@ class CoursesController extends Controller
     */
     public function edit($id)
     {
-        $data = CoursesModel::findOrFail($id);
+        $data =EquipmentsModel::findOrFail($id);
         return response()->json(['data' => $data]);
     }
 
@@ -99,29 +87,18 @@ class CoursesController extends Controller
 
         $request -> validate ([
             'Name' => 'required',
-            'Cost' => 'required',
-            'Requirement'  => 'required',
-            'Period'  => 'required',
+            'Safety' => 'required',
         ]);
 
         // Update Data
         $form_data = array(
             'Name' => $request->Name,
-            'Cost' => $request->Cost,
-            'Description'  => $request->Requirement,
-            'Requirement1'  => $request->Requirement1,
-            'Requirement2'  => $request->Requirement2,
-            'Requirement3'  => $request->Requirement3,
-            'Requirement4'  => $request->Requirement4,
-            'Requirement5'  => $request->Requirement5,
-            'Requirement6'  => $request->Requirement6,
-            'Requirement7'  => $request->Requirement7,
-            'Requirement8'  => $request->Requirement8,
-            'Period'  => $request->Period,
+            'Description' => $request->Safety,
+            'Safety1' => $request->Safety1,
         );
         // update
-        CoursesModel::whereId ($rowId)->update($form_data);
-        return redirect('CoursesResource')
+        EquipmentsModel::whereId ($rowId)->update($form_data);
+        return redirect('EquipmentsResource')
             ->with('success','Data Is Successfully Updated');
     }
 
@@ -134,11 +111,10 @@ class CoursesController extends Controller
     public function destroy(Request $request, $id)
     {
         $rowId = $request->deleteId;
-
         // delete
-        $data = CoursesModel::findOrFail($rowId);
+        $data =EquipmentsModel::findOrFail($rowId);
         $data ->delete();
-        return redirect('CoursesResource')
+        return redirect('EquipmentsResource')
             ->with('success','Data Is Successfully Deleted');
     }
 }

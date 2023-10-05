@@ -22,7 +22,9 @@
                 {{$total}}
             </span>
             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @if(session('userType')=='Admin')
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add New</button>
+            @endif
         </div>
     </div>
     <br>
@@ -51,33 +53,50 @@
 				<thead>
 					<tr>
 						<th class="text-center">Name</th>
-						<th class="text-center">Cost</th>
+						<th class="text-center">Cost In USD</th>
 						<th class="text-center">Period</th>
-						<th class="text-center">Description</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">Action1</th>
+                        @if(session('userType')=='Admin')
 						<th class="text-center">Action2</th>
 						<th class="text-center">Action3</th>
+                        @endif
 					</tr>
 				</thead>
+                <tbody>
 				@foreach($data as $row)
 				<tr class="row{{$row->id}}">
 					<td class="text-center">{{$row->Name}}</td>
 					<td class="text-center">{{$row->Cost}}</td>
 					<td class="text-center">{{$row->Period}}</td>
-					<td class="text-center">{{$row->Description}}</td>
 					<td class="text-center">{{$row->created_at}}</td>
                     <td class="text-center" >
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#editModal">  Edit</button>
-                    </td>
-                    <td class="text-center">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#showModal">Show</button>
+                    </td>
+                    @if(session('userType')=='Admin')
+                    <td class="text-center">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#editModal">  Edit</button>
                     </td>
                     <td class="text-center">
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#deleteModal">Delete</button>
                     </td>
+                    @endif
 				</tr>
 				@endforeach
+                </tbody>
+                <tfoot>
+                <tr>
+						<th class="text-center">Name</th>
+						<th class="text-center">Cost In USD</th>
+						<th class="text-center">Period</th>
+						<th class="text-center">Date</th>
+						<th class="text-center">Action1</th>
+                        @if(session('userType')=='Admin')
+						<th class="text-center">Action2</th>
+						<th class="text-center">Action3</th>
+                        @endif
+					</tr>
+                </tfoot>
 			</table>
 
 
@@ -85,15 +104,15 @@
     <!-- The add Modal -->
     <div class="modal fade modal-lg" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
-                <div class="modal-header">
+                <div class="modal-header ">
                     
                     <p class="modal-title text-center" >Adding New Course</p>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
+                <div class="modal-body ">
                     <form  action="{{route('CoursesResource.store')}}" method="post">
                         
                         {{ csrf_field() }}
@@ -112,24 +131,44 @@
 
 
     <!-- The show Modal -->
-    <div class="modal fade modal-sm" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
-                <div class="modal-header">
+                <div class="modal-header ">
                     <p class="modal-title text-center" >Viewing A Course Details</p>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <b><p class="text-start">Name</p></b>
-                    <p class="text-start" id="show-Name-id" ></p>
-                    <b><p class="text-start">Cost</p></b>
-                    <p class="text-start" id="show-cost-id" ></p>
-                    <b><p class="text-start">Period</p></b>
-                    <p class="text-start" id="show-period-id" ></p>
-                    <b><p class="text-start">Description</p></b>
+                <div class="modal-body ">
+                    <table class="table " >
+                        <tr>
+                            <td>
+                                <b><p class="text-start">Name</p></b>
+                                <p class="text-start" id="show-Name-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Cost</p></b>
+                                <p class="text-start" id="show-cost-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Period</p></b>
+                                <p class="text-start" id="show-period-id" ></p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <b><p class="text-start">Requirements</p></b>
                     <p class="text-start" id="show-description-id" ></p>
+                    <p class="text-start" id="show-requirement1-id" ></p>
+                    <p class="text-start" id="show-requirement2-id" ></p>
+                    <p class="text-start" id="show-requirement3-id" ></p>
+                    <p class="text-start" id="show-requirement4-id" ></p>
+                    <p class="text-start" id="show-requirement5-id" ></p>
+                    <p class="text-start" id="show-requirement6-id" ></p>
+                    <p class="text-start" id="show-requirement7-id" ></p>
+                    <p class="text-start" id="show-requirement8-id" ></p>
+
                 </div>
             
             <!-- Modal footer -->
@@ -143,14 +182,14 @@
     <!-- The edit Modal -->
     <div class="modal fade modal-lg" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
             <!-- Modal Header -->
-            <div class="modal-header">
+            <div class="modal-header ">
                 <p class="modal-title text-center" >Editing Course</p>
             </div>
 
             <!-- Modal body -->
-            <div class="edit-modal-body">
+            <div class="edit-modal-body ">
                 <form  action="{{route('CoursesResource.update','null')}}" method="post">
                     {{method_field('patch')}}
                     {{ csrf_field() }}
@@ -171,19 +210,19 @@
     <!-- The Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-content black-modal-text ">
+            <div class="modal-header ">
                 <h5 class="modal-title" id="deleteModalLabel">Deleting A Course</h5>
             </div>
             
             <!-- Modal body -->
-            <div class="delete-modal-body">
+            <div class="delete-modal-body ">
                 <br><p class="modal-title text-center" >Are Sure You Want To Delete</p><br>
                 <p id="Delete-Name" class="text-center" ></p><br>
             </div>
             
             <!-- Modal footer -->
-            <div class="modal-footer">
+            <div class="modal-footer ">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No Close</button>
                 <form  action="{{route('CoursesResource.destroy','null')}}" method="post">
                     {{ csrf_field() }}
@@ -207,7 +246,7 @@ $(document).ready(function() {$('#table').DataTable();});
 $('#showModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/CoursesResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/CoursesResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         var amount = parseInt(data.data.Cost);
         var Amount = amount.toLocaleString();
@@ -216,6 +255,15 @@ $('#showModal').on('show.bs.modal', function(event){
         $('#show-cost-id').html(Amount);
         $('#show-period-id').html(data.data.Period);
         $('#show-description-id').html(data.data.Description);
+        $('#show-requirement1-id').html(data.data.Requirement1);
+        $('#show-requirement2-id').html(data.data.Requirement2);
+        $('#show-requirement3-id').html(data.data.Requirement3);
+        $('#show-requirement4-id').html(data.data.Requirement4);
+        $('#show-requirement5-id').html(data.data.Requirement5);
+        $('#show-requirement6-id').html(data.data.Requirement6);
+        $('#show-requirement7-id').html(data.data.Requirement7);
+        $('#show-requirement8-id').html(data.data.Requirement8);
+
     })
 });
 
@@ -223,7 +271,7 @@ $('#showModal').on('show.bs.modal', function(event){
 $('#editModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/CoursesResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/CoursesResource/"+id+"/edit";
     console.log(RequestUrl)
     $.get(RequestUrl, function (data) {
         // {"data":{"id":1,"Name":"Course 1","Cost":"400000","Period":"7","Description":"description","created_at":"2023-09-02T15:05:30.000000Z","updated_at":"2023-09-02T15:05:30.000000Z"}}
@@ -233,7 +281,16 @@ $('#editModal').on('show.bs.modal', function(event){
         $('#edit-Name').val(data.data.Name);
         $('#edit-Cost').val(data.data.Cost);
         $('#edit-Period').val(data.data.Period);
-        $('#edit-Description').val(data.data.Description);
+        $('#edit-Requirement').val(data.data.Description);
+        $('#edit-Requirement1').val(data.data.Requirement1);
+        $('#edit-Requirement2').val(data.data.Requirement2);
+        $('#edit-Requirement3').val(data.data.Requirement3);
+        $('#edit-Requirement4').val(data.data.Requirement4);
+        $('#edit-Requirement5').val(data.data.Requirement5);
+        $('#edit-Requirement6').val(data.data.Requirement6);
+        $('#edit-Requirement7').val(data.data.Requirement7);
+        $('#edit-Requirement8').val(data.data.Requirement8);
+
     })
 });
 
@@ -242,7 +299,7 @@ $('#editModal').on('show.bs.modal', function(event){
 $('#deleteModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/CoursesResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/CoursesResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         $('#deleteModal').modal('show');
         $('#deleteId').val(data.data.id);

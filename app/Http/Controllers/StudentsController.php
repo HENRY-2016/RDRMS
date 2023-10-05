@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\StudentsModel;
+use App\Models\CoursesModel;
 
 class StudentsController extends Controller
 {
@@ -11,7 +12,8 @@ class StudentsController extends Controller
     {
         $data =StudentsModel::latest()->get ();
         $total = StudentsModel::count();
-        return view('components/students', compact('data','total'));
+        $courses = CoursesModel::get(['Name']);
+        return view('components/students', compact('data','total','courses'));
     }
 
     /**
@@ -38,7 +40,18 @@ class StudentsController extends Controller
             'Contact' => 'required',
             'UserName'  => 'required',
             'Password' => 'required',
+            'EntryYear' => 'required',
+            'Course' => 'required',
+            'StudentId' => 'required',
+            'Address' => 'required',
+            'Gender' => 'required',
+            // 'image' =>  'required|mimes:jpeg,png,jpg,|max:2048'
+
         ]);
+
+        // $image = $request->file('image');
+        // $new_name = rand().'.'.$image->getClientOriginalExtension ();
+        // $image ->move(public_path('images'),$new_name);
 
         // insert Data
         $form_data = array(
@@ -47,13 +60,22 @@ class StudentsController extends Controller
             'UserName'  => $request->UserName,
             'Contact'  => $request->Contact,
             'Password' => $request->Password,
-
+            'EntryYear' => $request->EntryYear,
+            'StudentId' => $request->StudentId,
+            'Course' => $request->Course,
+            'Address' => $request->Address,
+            'Gender' => $request->Gender,
+            'Image'  => 'null',
         );
-       StudentsModel::create ($form_data);
+        StudentsModel::create ($form_data);
         return redirect('StudentsResource')
             ->with('success','Data Added successfully.');
     }
-
+    public function getCourseAmount ($name)
+    {
+        $data = CoursesModel::where('Name',$name)->get(['Cost']);
+        return $data;
+    }
     /**
     * Display the specified resource.
     *
@@ -63,9 +85,7 @@ class StudentsController extends Controller
     public function show($id)
     {
         $data =StudentsModel::findOrFail($id);
-        // echo json_encode($data);
         return view('components/doctor/show', compact('data'));
-        // echo $data;
     }
 
     /**
@@ -97,6 +117,11 @@ class StudentsController extends Controller
             'UserName'  => 'required',
             'Contact'  => 'required',
             'Password' => 'required',
+            'EntryYear' => 'required',
+            'Course' => 'required',
+            'StudentId' => 'required',
+            'Address' => 'required',
+            'Gender' => 'required',
         ]);
 
         // Update Data
@@ -106,9 +131,14 @@ class StudentsController extends Controller
             'UserName'  => $request->UserName,
             'Contact'  => $request->Contact,
             'Password' => $request->Password,
+            'EntryYear' => $request->EntryYear,
+            'StudentId' => $request->StudentId,
+            'Course' => $request->Course,
+            'Address' => $request->Address,
+            'Gender' => $request->Gender,
         );
         // update
-       StudentsModel::whereId ($rowId)->update($form_data);
+        StudentsModel::whereId ($rowId)->update($form_data);
         return redirect('StudentsResource')
             ->with('success','Data Is Successfully Updated');
     }

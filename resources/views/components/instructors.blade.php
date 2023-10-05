@@ -22,7 +22,9 @@
                 {{$total}}
             </span>
             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @if(session('userType')=='Admin')
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add New</button>
+            @endif
         </div>
     </div>
     <br>
@@ -54,11 +56,12 @@
 						<th class="text-center">LName</th>
 						<th class="text-center">Contact</th>
 						<th class="text-center">UserName</th>
-						<th class="text-center">Password</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">Action1</th>
+                        @if(session('userType')=='Admin')
 						<th class="text-center">Action2</th>
 						<th class="text-center">Action3</th>
+                        @endif
 					</tr>
 				</thead>
 				@foreach($data as $row)
@@ -67,17 +70,18 @@
 					<td class="text-center">{{$row->LName}}</td>
 					<td class="text-center">{{$row->Contact}}</td>
 					<td class="text-center">{{$row->UserName}}</td>
-					<td class="text-center">{{$row->PassWord}}</td>
 					<td class="text-center">{{$row->created_at}}</td>
                     <td class="text-center" >
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#editModal">  Edit</button>
-                    </td>
-                    <td class="text-center">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#showModal">Show</button>
+                    </td>
+                    @if(session('userType')=='Admin')
+                    <td class="text-center">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#editModal">  Edit</button>
                     </td>
                     <td class="text-center">
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#deleteModal">Delete</button>
                     </td>
+                    @endif
 				</tr>
 				@endforeach
 			</table>
@@ -87,7 +91,7 @@
     <!-- The add Modal -->
     <div class="modal fade modal-lg" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
                 <div class="modal-header">
                     
@@ -115,7 +119,7 @@
         <!-- The show Modal -->
         <div class="modal fade modal-sm" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <p class="modal-title text-center" >Viewing A Doctor Details</p>
@@ -128,7 +132,11 @@
                     <b><p class="text-start">Contact</p></b>
                     <p class="text-start" id="show-Contact-id" ></p>
                     <b><p class="text-start">About</p></b>
+                    <p class="text-start" id="show-About-id" ></p>
+                    @if(session('userType')=='Admin')
+                    <b><p class="text-start">Password</p></b>
                     <p class="text-start" id="show-Password-id" ></p>
+                    @endif
                 </div>
             
             <!-- Modal footer -->
@@ -142,7 +150,7 @@
     <!-- The edit Modal -->
     <div class="modal fade modal-lg" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
             <!-- Modal Header -->
             <div class="modal-header">
                 <p class="modal-title text-center" >Editing Instructor</p>
@@ -170,7 +178,7 @@
     <!-- The delete Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Deleting A Instructor</h5>
             </div>
@@ -206,20 +214,21 @@ $(document).ready(function() {$('#table').DataTable();});
 $('#showModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/InstructorsResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/InstructorsResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         var Name = data.data.FName+" "+" "+data.data.LName
         $('#showModal').modal('show');
         $('#show-Name-id').html(Name);
         $('#show-Contact-id').html(data.data.Contact);
-        $('#show-Password-id').html(data.data.About);
+        $('#show-About-id').html(data.data.About);
+        $('#show-Password-id').html(data.data.PassWord);
     })
 });
 
 $('#editModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/InstructorsResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/InstructorsResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         $('#editModal').modal('show');
         $('#editId').val(data.data.id);
@@ -237,7 +246,7 @@ $('#editModal').on('show.bs.modal', function(event){
 $('#deleteModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/InstructorsResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/InstructorsResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         $('#deleteModal').modal('show');
         $('#deleteId').val(data.data.id);

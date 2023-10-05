@@ -22,7 +22,9 @@
                 {{$total}}
             </span>
             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @if(session('userType')=='Admin')
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add New</button>
+            @endif
         </div>
     </div>
     <br>
@@ -54,11 +56,12 @@
 						<th class="text-center">LName</th>
 						<th class="text-center">Contact</th>
 						<th class="text-center">UserName</th>
-						<th class="text-center">Password</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">Action1</th>
+                        @if(session('userType')=='Admin')
 						<th class="text-center">Action2</th>
 						<th class="text-center">Action3</th>
+                        @endif
 					</tr>
 				</thead>
 				@foreach($data as $row)
@@ -67,17 +70,18 @@
 					<td class="text-center">{{$row->LName}}</td>
 					<td class="text-center">{{$row->Contact}}</td>
 					<td class="text-center">{{$row->UserName}}</td>
-					<td class="text-center">{{$row->PassWord}}</td>
 					<td class="text-center">{{$row->created_at}}</td>
                     <td class="text-center" >
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#editModal">  Edit</button>
-                    </td>
-                    <td class="text-center">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#showModal">Show</button>
+                    </td>
+                    @if(session('userType')=='Admin')
+                    <td class="text-center">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#editModal">  Edit</button>
                     </td>
                     <td class="text-center">
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-id="{{ $row->id }}" data-bs-target="#deleteModal">Delete</button>
                     </td>
+                    @endif
 				</tr>
 				@endforeach
 			</table>
@@ -87,11 +91,11 @@
     <!-- The add Modal -->
     <div class="modal fade modal-lg" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
                 <div class="modal-header">
                     
-                    <p class="modal-title text-center" >Adding New User</p>
+                    <p class="modal-title text-center" >Adding New Student</p>
                 </div>
 
                 <!-- Modal body -->
@@ -99,7 +103,7 @@
                     <form  action="{{route('StudentsResource.store')}}" method="post">
                         
                         {{ csrf_field() }}
-                        @include('templates.admin-add')
+                        @include('templates.students-add')
                         
                     </form>
                 </div>
@@ -113,9 +117,9 @@
     </div>
 
     <!-- The show Modal -->
-    <div class="modal fade modal-sm" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="showModal" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <p class="modal-title text-center" >Viewing Student Details</p>
@@ -123,12 +127,50 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <b><p class="text-start">Name</p></b>
-                    <p class="text-start" id="show-Name-id" ></p>
-                    <b><p class="text-start">Contact</p></b>
-                    <p class="text-start" id="show-Contact-id" ></p>
-                    <b><p class="text-start">Password</p></b>
-                    <p class="text-start" id="show-Password-id" ></p>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <b><p class="text-start">Name</p></b>
+                                <p class="text-start" id="show-Name-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Gender</p></b>
+                                <p class="text-start" id="show-Gender-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Contact</p></b>
+                                <p class="text-start" id="show-Contact-id" ></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b><p class="text-start">Student Id</p></b>
+                                <p class="text-start" id="show-StudentId-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Course</p></b>
+                                <p class="text-start" id="show-Course-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Cost</p></b>
+                                <p class="text-start" id="show-EntryYear-id" ></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b><p class="text-start">Address</p></b>
+                                <p class="text-start" id="show-Address-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">UserName</p></b>
+                                <p class="text-start" id="show-UserName-id" ></p>
+                            </td>
+                            <td>
+                                <b><p class="text-start">Password</p></b>
+                                <p class="text-start" id="show-Password-id" ></p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             
             <!-- Modal footer -->
@@ -142,7 +184,7 @@
     <!-- The edit Modal -->
     <div class="modal fade modal-lg" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
             <!-- Modal Header -->
             <div class="modal-header">
                 <p class="modal-title text-center" >Editing User</p>
@@ -153,7 +195,7 @@
                 <form  action="{{route('StudentsResource.update','test')}}" method="post">
                     {{method_field('patch')}}
                     {{ csrf_field() }}
-                    @include('templates.admin-edit')
+                    @include('templates.students-edit')
                     <input type="hidden"  id="editId" name="editId" >
                 </form>
             </div>
@@ -170,7 +212,7 @@
     <!-- The delete Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content black-modal-text">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Deleting A User</h5>
             </div>
@@ -206,20 +248,26 @@ $(document).ready(function() {$('#table').DataTable();});
 $('#showModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/StudentsResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/StudentsResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         var Name = data.data.FName+" "+" "+data.data.LName
         $('#showModal').modal('show');
         $('#show-Name-id').html(Name);
         $('#show-Contact-id').html(data.data.Contact);
         $('#show-Password-id').html(data.data.PassWord);
+        $('#show-UserName-id').html(data.data.UserName);
+        $('#show-EntryYear-id').html(data.data.EntryYear);
+        $('#show-StudentId-id').html(data.data.StudentId);
+        $('#show-Course-id').html(data.data.Course);
+        $('#show-Address-id').html(data.data.Address);
+        $('#show-Gender-id').html(data.data.Gender);
     })
 });
 
 $('#editModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/StudentsResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/StudentsResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         $('#editModal').modal('show');
         $('#editId').val(data.data.id);
@@ -228,6 +276,12 @@ $('#editModal').on('show.bs.modal', function(event){
         $('#edit-Contact').val(data.data.Contact);
         $('#edit-UserName').val(data.data.UserName);
         $('#edit-Password').val(data.data.PassWord);
+        $('#edit-Gender').val(data.data.Gender);
+        $('#edit-StudentId').val(data.data.StudentId);
+        $('#edit-Address').val(data.data.Address);
+        $('#edit-CourseName').val(data.data.Course);
+        $('#edit-CourseCost').val(data.data.EntryYear);
+
     })
 });
 
@@ -236,7 +290,7 @@ $('#editModal').on('show.bs.modal', function(event){
 $('#deleteModal').on('show.bs.modal', function(event){
     var target = jQuery(event.relatedTarget)
     var id = target.attr('data-bs-id');
-    var RequestUrl = "/StudentsResource/"+id+"/edit";
+    var RequestUrl =  BaseUrl +"/StudentsResource/"+id+"/edit";
     $.get(RequestUrl, function (data) {
         $('#deleteModal').modal('show');
         $('#deleteId').val(data.data.id);
@@ -246,9 +300,25 @@ $('#deleteModal').on('show.bs.modal', function(event){
     })
 });
 
-
+function getCourseAmount ()
+{
+    var name =  document.getElementById('CourseName').value;
+    var RequestUrl =  BaseUrl +"{{url('/get/course/amount/')}}"+"/"+name;
+    $.get(RequestUrl, function (data) {
+        var Amount = data[0].Cost
+        $('#CourseCost').val(Amount);
+    })
+}
+function getEditCourseAmount ()
+{
+    var name =  document.getElementById('edit-CourseName').value;
+    var RequestUrl =  BaseUrl +"{{url('/get/course/amount/')}}"+"/"+name;
+    $.get(RequestUrl, function (data) {
+        var Amount = data[0].Cost
+        $('#edit-CourseCost').val(Amount);
+    })
+}
 </script>
 </body>
 </html>
 
-<!-- https://fahmidasclassroom.com/laravel-7-crud-using-bootstrap-modal/ -->

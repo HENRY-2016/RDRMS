@@ -1,9 +1,8 @@
 
-/* .app-body{background-color: whitesmoke;} */
-/* .app-body{color:white; background-color: rgb(124, 111, 111);} */
-.app-body{color:white; background-color: rgb(27, 27, 27);}
-.body-content{margin-left: 20px; margin-right: 20px; margin-top: 10px;}
-
+.app-body{ background-color: rgb(27, 27, 27);}
+.body-content{color: white; margin-left: 20px; margin-right: 20px; margin-top: 10px;}
+.black-modal-text{color: black !important;}
+.input-labels{font-size: 18px;}
 .main-body{margin-top: -20px;}
 
 .main-content-card
@@ -14,8 +13,9 @@
     margin: 6rem auto 8.1rem auto;
 
 }
-.card-login{width: 370px; height: 480px;}
-.card-welcome{width: 370px; height: 500px;}
+.card-login{width: 500px; height: 480px;}
+.card-welcome{width: 700px; height: 500px;}
+.log-in-card-right-div{margin-left: 25px;}
 .card-dashboard{height: 100%; margin-top: -95px;  background: #110e0e !important; color: white; }
 
 #card-content {padding: 12px 12px;}
@@ -33,13 +33,13 @@
 {
     width: 140px;
     height: 140px;
-    margin-left: -20px;
+    margin-left: 20px;
     margin-top: 2px;
 }
 .welcome-img
 {
     width: 340px;
-    height: 120px;
+    height: 300px;
     margin-left: -20px;
     margin-top: 2px;
 }
@@ -61,11 +61,20 @@
     border: 3px solid #0000FF;
 }
 
-.text-input-fields:focus {border: 4px solid #5959ed;;}
+.text-input-fields-time {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    border-radius: 10px;
+    border: 3px solid #0000FF;
+}
+
+.text-input-fields-time,.text-input-fields:focus {border: 4px solid #5959ed;;}
 
 .log-in-btn {
 background-color: #0000FF;
-border-radius: 50px;
+border-radius: 10px;
 color: white;
 padding: 15px 20px;
 border: none;
@@ -119,13 +128,9 @@ opacity: 0.9;
 /* Data tables */
 .text-center
 {
-    /* align-items: center; */
-    /* align-self: center; */
     text-align: center;
-    /* align-content: center; */
 }
-.dataTables_length, .dataTables_length select{  margin-left: 20px; font-size: 15px;}
-/* .dataTables_filter input { margin-left: 20px; }; */
+
 .table-th-row{background-color: #0000FF !important; color: white;}
 .user-name{margin-top: 15px; margin-right: 10px;}
 .log-out-btn { 
