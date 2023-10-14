@@ -57,7 +57,6 @@
             @endforeach
         </select>
     </div>
-
     <div class="my-grid-item ">
     <button type="submit" class="btn btn-primary">Save Dive</button> 
     </div>

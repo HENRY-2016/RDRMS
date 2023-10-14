@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserAuthenticationController;
@@ -175,6 +176,12 @@ Route::get('/components/dives', function ()
     }
     return view('welcome');
 });
+
+
+Route::get('/components/dives/{viewType?}/{keyId?}',[DivesController::class,'viewDives']);
+Route::get('/components/student/{viewType?}/{keyId?}',[StudentsController::class,'viewStudent']);
+
+
 
 Route::get('/components/dives/students/', function () 
 {

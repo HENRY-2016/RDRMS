@@ -76,6 +76,19 @@ class StudentsController extends Controller
         $data = CoursesModel::where('Name',$name)->get(['Cost']);
         return $data;
     }
+    public function viewStudent (Request $request)
+    {
+        $viewType = $request->viewType;
+        $keyId = $request->keyId;
+
+        if($viewType == 'student')
+        {
+            $data =StudentsModel::where('id',$keyId)->get ();
+            $total = StudentsModel::where('id',$keyId)->count();
+            $courses = CoursesModel::get(['Name']);
+            return view('components/students', compact('data','total','courses'));
+        }
+    }
     /**
     * Display the specified resource.
     *
@@ -117,7 +130,7 @@ class StudentsController extends Controller
             'UserName'  => 'required',
             'Contact'  => 'required',
             'Password' => 'required',
-            'EntryYear' => 'required',
+            'Cost' => 'required',
             'Course' => 'required',
             'StudentId' => 'required',
             'Address' => 'required',

@@ -39,7 +39,7 @@
     </div>
 
     <div class="my-grid-item ">
-        <input class="text-input-fields" type="text"  id="CourseCost" name="EntryYear" readonly placeholder="Course Price">
+        <input class="text-input-fields" type="text"  id="CourseCost" name="EntryYear"  placeholder="Course Price">
     </div>
 
     <div class="my-grid-item ">

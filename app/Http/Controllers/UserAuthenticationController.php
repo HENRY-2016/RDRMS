@@ -84,7 +84,7 @@ class UserAuthenticationController extends Controller
                 $request->session()->put('id',$DbId);
                 $request->session()->put('contact',$DbContact);
                 $request->session()->put('userType',$UserType);
-                return redirect('components/students');
+                return redirect('components/courses');
             }
         }
     }
@@ -124,7 +124,7 @@ class UserAuthenticationController extends Controller
                 $request->session()->put('details',$DbAbout);
                 $request->session()->put('id',$DbId);
                 $request->session()->put('userType',$UserType);
-                return redirect('components/instructors');
+                return redirect('components/courses');
             }
         }
     }

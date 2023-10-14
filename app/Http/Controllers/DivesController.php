@@ -19,6 +19,29 @@ class DivesController extends Controller
         return view('components/dives', compact('data','total','instructors','equipments'));
     }
 
+    public function viewDives (Request $request)
+    {
+        $viewType = $request->viewType;
+        $keyId = $request->keyId;
+
+        if($viewType == 'student')
+        {
+            $data =DivesModel::where('Student',$keyId)->get ();
+            $total = DivesModel::where('Student',$keyId)->count();
+            $instructors = InstructorsModel::get(['id']);
+            $equipments = EquipmentsModel::get(['id']);
+            return view('components/dives', compact('data','total','instructors','equipments'));
+        }
+        if($viewType == 'instructor')
+        {
+            $data =DivesModel::where('Instructor',$keyId)->get ();
+            $total = DivesModel::where('Instructor',$keyId)->count();
+            $instructors = InstructorsModel::get(['id']);
+            $equipments = EquipmentsModel::get(['id']);
+            return view('components/dives', compact('data','total','instructors','equipments'));
+        }
+    }
+
     /**
     * Show the form for creating a new resource.
     *
@@ -37,7 +60,7 @@ class DivesController extends Controller
     */
     public function store(Request $request)
     {
-        $studentId = $request->Student;
+        $keyId = $request->Student;
         // $ViewStudent = $request->input('ViewStudent');
         // $StoreStudent = $request->input('StoreStudent');
 
@@ -77,8 +100,8 @@ class DivesController extends Controller
         );
 
         DivesModel::create ($form_data);
-        $data =DivesModel::where ('Student',$studentId)->get ();
-        $total = DivesModel::where ('Student',$studentId)->count();
+        $data =DivesModel::where ('Student',$keyId)->get ();
+        $total = DivesModel::where ('Student',$keyId)->count();
         $instructors = InstructorsModel::get(['id']);
         $equipments = EquipmentsModel::get(['id']);
         return view('components.dives', compact('data','total','instructors','equipments'))
@@ -129,7 +152,7 @@ class DivesController extends Controller
 
         if($studentFeedBack)
         {
-            $studentId = $request->studentId;
+            $keyId = $request->keyId;
             $rowId = $request->studentRowId;
             $request -> validate (['studentFeedBack' => 'required']);
 
@@ -137,10 +160,10 @@ class DivesController extends Controller
             $form_data = array('FeedBack' => $request->studentFeedBack);
             // update
             
-            // DivesModel::where ('Student',$studentId)->update($form_data);
+            // DivesModel::where ('Student',$keyId)->update($form_data);
             DivesModel::whereId ($rowId)->update($form_data);
 
-            $data =DivesModel::where ('Student',$studentId)->get ();
+            $data =DivesModel::where ('Student',$keyId)->get ();
             $total = DivesModel::count();
             $instructors = InstructorsModel::get(['id']);
             $equipments = EquipmentsModel::get(['id']);
@@ -152,7 +175,7 @@ class DivesController extends Controller
         {
             $status = 'Replied';
             $rowId = $request->instructorRowId;
-            $remarkStudentId = $request->remarkStudentId;
+            $remarkkeyId = $request->remarkkeyId;
             $instructorId = $request->instructorId;
 
             $request -> validate (['instructorRemark' => 'required']);

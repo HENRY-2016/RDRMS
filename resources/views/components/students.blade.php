@@ -165,10 +165,12 @@
                                 <b><p class="text-start">UserName</p></b>
                                 <p class="text-start" id="show-UserName-id" ></p>
                             </td>
+                            @if(session('userType')=='Admin')
                             <td>
                                 <b><p class="text-start">Password</p></b>
                                 <p class="text-start" id="show-Password-id" ></p>
                             </td>
+                            @endif
                         </tr>
                     </table>
                 </div>

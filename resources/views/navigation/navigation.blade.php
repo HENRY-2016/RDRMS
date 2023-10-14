@@ -11,15 +11,31 @@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="{{url('components/courses')}}"role="button" >Courses</a>
     </li>
-
-    @if(session('userType')=='Instructor' || session('userType')=='Admin')
+    @if(session('userType')=='Admin')
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="{{url('components/students')}}" role="button" >Students</a>
     </li>
-    @endif
+
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="{{url('components/dives')}}" role="button" >Dives</a>
     </li>
+    @endif
+    @if(session('userType')=='Instructor')
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{url('components/students')}}" role="button" >Students</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{url('components/dives',['viewType'=>'instructor','keyId'=>session('id')])}}" role="button" >Dives</a>
+    </li>
+    @endif
+    @if(session('userType')=='Student')
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{url('components/student',['viewType'=>'student','keyId'=>session('id')])}}" role="button" >Student</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{url('components/dives',['viewType'=>'student','keyId'=>session('id')])}}" role="button" >Dives</a>
+    </li>
+    @endif
 
 
 
