@@ -539,7 +539,7 @@ $('#showModal').on('show.bs.modal', function(event){
     $.get(RequestUrl, function (data) {
         $('#showModal').modal('show');
         $('#show-Name-id').html(student);
-        $('#show-Date-id').html(data.data.created_at);
+        $('#show-Date-id').html(data.data.created_at.split('T')[0]);
         $('#show-TimeIn-id').html(data.data.TimeIn);
         $('#show-Site-id').html(data.data.Site);
         $('#show-DiveNo-id').html(data.data.DiveNo);
@@ -565,7 +565,7 @@ $('#studentFeedBackModal').on('show.bs.modal', function(event){
         $('#studentFeedBackModal').modal('show');
         $('#feedback-Name-id').html(student);
         $('#studentRowId').val(id)
-        $('#feedback-Date-id').html(data.data.created_at);
+        $('#feedback-Date-id').html(data.data.created_at.split('T')[0]);
         $('#feedback-TimeIn-id').html(data.data.TimeIn);
         $('#feedback-Site-id').html(data.data.Site);
         $('#feedback-DiveNo-id').html(data.data.DiveNo);
@@ -592,7 +592,7 @@ $('#instructorRemarkModal').on('show.bs.modal', function(event){
         $('#remark-Name-id').html(student);
         $('#instructorRowId').val(id)
         $('#remarkStudentId').val(remarkStudentId)
-        $('#remark-Date-id').html(data.data.created_at);
+        $('#remark-Date-id').html(data.data.created_at.split('T')[0]);
         $('#remark-TimeIn-id').html(data.data.TimeIn);
         $('#remark-Site-id').html(data.data.Site);
         $('#remark-DiveNo-id').html(data.data.DiveNo);

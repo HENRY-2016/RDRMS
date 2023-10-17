@@ -130,7 +130,7 @@ class StudentsController extends Controller
             'UserName'  => 'required',
             'Contact'  => 'required',
             'Password' => 'required',
-            'Cost' => 'required',
+            'EntryYear' => 'required',
             'Course' => 'required',
             'StudentId' => 'required',
             'Address' => 'required',

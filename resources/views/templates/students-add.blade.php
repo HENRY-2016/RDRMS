@@ -29,7 +29,7 @@
     </div>
 
     <div class="my-grid-item ">
-        <select class="text-input-fields" type="text" onchange="getCourseAmount()"  id="CourseName" name="Course" autocomplete="off" required="required" placeholder="Course">
+        <select class="text-input-fields" type="text"   id="CourseName" name="Course" autocomplete="off" required="required" placeholder="Course">
             <option>Course Name</option>
             <option></option>
             @foreach($courses as $name)
