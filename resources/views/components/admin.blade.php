@@ -120,7 +120,7 @@
             <div class="modal-content black-modal-text">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <p class="modal-title text-center" >Viewing A Doctor Details</p>
+                    <p class="modal-title text-center" >Viewing Admin Details</p>
                 </div>
 
                 <!-- Modal body -->
